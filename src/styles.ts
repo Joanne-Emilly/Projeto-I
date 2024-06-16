@@ -11,7 +11,7 @@ const GlobalStyle = createGlobalStyle`
   body {
   height: 100vh;
   
-    background-color: #949494;
+    background-color: #101828;
     #root {
       height: 100%;
       font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

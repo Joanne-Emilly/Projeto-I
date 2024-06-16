@@ -1,5 +1,8 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from 'axios';
 import { useCallback, useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 import { Container } from './app.styles';
 import InputNumber from './components/Input/InputNumber';
@@ -8,9 +11,14 @@ import Select from './components/Input/Select';
 function App() {
   const [firstCurrency, setFirstCurrency] = useState('USD');
   const [secondCurrency, setSecondCurrency] = useState('BRL');
-  const [firstValue, setFirstValue] = useState<string>('1');
-  const [secondValue, setSecondValue] = useState<string>();
-  const [price, setPrice] = useState(0);
+  const [inputValues, setInputValues] = useState<{
+    first: string | number;
+    second: string | number | undefined;
+  }>({
+    first: '1',
+    second: undefined,
+  });
+  const [data, setData] = useState({ price: 0, updatedAt: new Date() });
 
   const fetchData = useCallback(async (fCurrency: string, sCurrency: string) => {
     const currencyFormatted = `${fCurrency}_${sCurrency}`;
@@ -19,19 +27,35 @@ function App() {
         `https://api.invertexto.com/v1/currency/${currencyFormatted}?token=${import.meta.env.VITE_API_TOKEN}`,
       )
       .then(response => {
-        console.log(response);
+        //console.log(response);
         const currencyPrice = response.data[`${currencyFormatted}`].price;
-        setPrice(currencyPrice);
-        setSecondValue((+firstValue * currencyPrice).toString());
+        const updatedAt = response.data[`${currencyFormatted}`].timestamp;
+        setData({ price: currencyPrice, updatedAt: new Date(updatedAt * 1000) });
+        setInputValues(previousValue => {
+          return { ...previousValue, second: Number(previousValue.first) * currencyPrice };
+        });
+        if (response.status === 200) {
+          toast.success('Dados obtidos');
+        }
+      })
+      .catch(err => {
+        if (err.response.request.status === 401) {
+          toast.error(`${err.response.data.message}`);
+        }
+        if (err.response.request.status === 404) {
+          toast.error(`${err.response.data.message}`);
+        }
       });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   useEffect(() => {
     fetchData(firstCurrency, secondCurrency);
   }, [fetchData, firstCurrency, secondCurrency]);
   return (
     <Container>
+      <h1>
+        Ultima atualização:
+        {` ${data.updatedAt.getDate()}/${data.updatedAt.getMonth()}/${data.updatedAt.getFullYear()} as ${data.updatedAt.getHours()}:${data.updatedAt.getMinutes()}`}
+      </h1>
       <div className="selects">
         <Select
           onChange={e => {
@@ -51,23 +75,25 @@ function App() {
       <div className="inputs">
         <InputNumber
           type="number"
-          value={firstValue !== '' ? firstValue : ''}
+          value={inputValues.first !== '' ? inputValues.first : ''}
           onChange={e => {
-            const inputValue = e.target.value;
-            setFirstValue(inputValue);
-            setSecondValue((+inputValue * price).toString());
+            const inputValue = Number(e.target.value);
+            setInputValues({ first: inputValue, second: inputValue * data.price });
           }}
         />
         <InputNumber
           type="number"
-          value={secondValue !== '' ? secondValue || price : ''}
+          value={inputValues.second !== '' ? inputValues.second || data.price : ''}
           onChange={e => {
-            const inputValue = e.target.value;
-            setSecondValue(inputValue);
-            setFirstValue((+inputValue * (1 / price)).toString());
+            const inputValue = Number(e.target.value);
+            setInputValues({
+              first: inputValue * (1 / data.price),
+              second: inputValue,
+            });
           }}
         />
       </div>
+      <ToastContainer />
     </Container>
   );
 }
