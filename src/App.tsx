@@ -42,7 +42,7 @@ function App() {
         if (err.response.request.status === 401) {
           toast.error(`${err.response.data.message}`);
         }
-        if (err.response.request.status === 404) {
+        if (err.response.request.status === 422) {
           toast.error(`${err.response.data.message}`);
         }
       });
@@ -85,9 +85,9 @@ function App() {
           type="number"
           value={inputValues.second !== '' ? inputValues.second || data.price : ''}
           onChange={e => {
-            const inputValue = Number(e.target.value);
+            const inputValue = e.target.value;
             setInputValues({
-              first: inputValue * (1 / data.price),
+              first: Number(inputValue) * (1 / data.price),
               second: inputValue,
             });
           }}
