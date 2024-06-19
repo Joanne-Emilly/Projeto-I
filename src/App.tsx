@@ -53,8 +53,14 @@ function App() {
   return (
     <Container>
       <h1>
-        Ultima atualização:
-        {` ${data.updatedAt.getDate()}/${data.updatedAt.getMonth()}/${data.updatedAt.getFullYear()} as ${data.updatedAt.getHours()}:${data.updatedAt.getMinutes()}`}
+        Ultima atualização:{' '}
+        {data.updatedAt.toLocaleDateString('pt-BR', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+        })}
       </h1>
       <div className="selects">
         <Select
@@ -77,13 +83,13 @@ function App() {
           type="number"
           value={inputValues.first !== '' ? inputValues.first : ''}
           onChange={e => {
-            const inputValue = Number(e.target.value);
-            setInputValues({ first: inputValue, second: inputValue * data.price });
+            const inputValue = e.target.value;
+            setInputValues({ first: inputValue, second: Number(inputValue) * data.price });
           }}
         />
         <InputNumber
           type="number"
-          value={inputValues.second !== '' ? inputValues.second || data.price : ''}
+          value={inputValues.second !== '' ? inputValues.second : ''}
           onChange={e => {
             const inputValue = e.target.value;
             setInputValues({
