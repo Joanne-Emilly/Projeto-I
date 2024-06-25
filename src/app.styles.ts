@@ -4,33 +4,43 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 800px;
-  > h1 {
-    margin-bottom: 30px;
-    text-align: center;
-  }
-  > .selects {
-    > select {
-      margin: 0px 15px;
-      > option {
-        font-size: 2rem;
+  > header {
+    margin-top: 30px;
+    margin-bottom: 60px;
+    > nav {
+      > ul {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        list-style-type: none;
+        > li {
+          width: 100%;
+          max-width: 320px;
+          text-align: center;
+          > a {
+            border: 2px solid #cecece;
+            border-radius: 30px;
+            padding: 15px;
+            padding-top: 10px;
+            display: flex;
+            align-items: center;
+            color: #fff;
+            margin: 15px;
+            min-height: 134px;
+            > svg {
+              margin-right: 30px;
+              margin-top: 5px;
+            }
+            font-size: 3.5rem;
+            text-decoration: none;
+          }
+          > a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+          }
+        }
       }
     }
-  }
-  > .inputs {
-    margin-top: 30px;
-    display: flex;
-    > input {
-      margin: 0px 15px;
-    }
-  }
-  .Toastify__toast--success {
-    font-size: 4rem;
-  }
-  .Toastify__toast--warning {
-    font-size: 4rem;
-  }
-  .Toastify__toast--error {
-    font-size: 4rem;
   }
 `;

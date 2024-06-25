@@ -80,5 +80,4 @@ module.exports = {
       typescript: {},
     },
   },
-  ignores: ["**/*.js", "node_modules", "dist", "build"]
 };

@@ -6,4 +6,7 @@ export const SelectStyle = styled.select`
   font-size: 2rem;
   border-radius: 10px;
   background-color: #254d56;
+  > option {
+    font-size: 2rem;
+  }
 `;

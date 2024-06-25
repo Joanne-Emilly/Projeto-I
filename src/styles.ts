@@ -9,8 +9,7 @@ const GlobalStyle = createGlobalStyle`
     font-size: 62.5%;
   }
   body {
-  height: 100vh;
-  
+    height: 100vh;
     background-color: #101828;
     #root {
       height: 100%;
@@ -18,7 +17,6 @@ const GlobalStyle = createGlobalStyle`
       line-height: 1.5;
       font-weight: 400;
       display: flex;
-      align-items: center;
       justify-content: center;
       color-scheme: light dark;
       color: rgba(255, 255, 255, 0.87);
@@ -31,6 +29,12 @@ const GlobalStyle = createGlobalStyle`
   }
   h1 {
     font-size: 2rem;
+  }
+  a {
+  font-size: 3rem;
+  }
+  p {
+  font-size: 2rem;
   }
 `;
 
