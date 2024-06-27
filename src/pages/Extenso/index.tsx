@@ -1,5 +1,8 @@
+import 'react-toastify/dist/ReactToastify.css';
+
 import axios from 'axios';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
+import { toast, ToastContainer } from 'react-toastify';
 
 import InputNumber from '../../components/Input/InputNumber';
 import Select from '../../components/Input/Select';
@@ -9,16 +12,7 @@ const Extenso = () => {
   const [numberToConvert, setNumberToConvert] = useState('0');
   const [convertedNumber, setConvertedNumber] = useState('');
   const [textLanguage, setTextLanguage] = useState('pt');
-  const [textCurrency, setTextCurrency] = useState('');
-  const defaultLanguageKeys = useMemo<{ [index: string]: string }>(() => {
-    return {
-      pt: 'BRL',
-      en: 'USD',
-      es: 'ARS',
-      de: 'EUR',
-      fr: 'EUR',
-    };
-  }, []);
+  const [textCurrency, setTextCurrency] = useState('BRL');
   /* 
   https://api.invertexto.com/v1/number-to-words? [não muda]
   token=SEUTOKEN
@@ -27,14 +21,17 @@ const Extenso = () => {
   &currency=BRL
   */
   const fetchData = useCallback(
-    async (valueToConvert: string, language: string, textCurr: string) => {
-      const currency = textCurr || defaultLanguageKeys[`${language}`];
+    async (valueToConvert: string, language: string, currency: string) => {
       const value = valueToConvert && valueToConvert !== '-' ? valueToConvert : '0';
       const URL = `https://api.invertexto.com/v1/number-to-words?token=${import.meta.env.VITE_API_TOKEN}&number=${value}&language=${language}&currency=${currency}`;
-      const res = await axios.get(URL);
-      setConvertedNumber(res.data.text);
+      try {
+        const res = await axios.get(URL);
+        setConvertedNumber(res.data.text);
+      } catch (err: any) {
+        toast.error(err.response.data.message);
+      }
     },
-    [defaultLanguageKeys],
+    [],
   );
   useEffect(() => {
     fetchData(numberToConvert, textLanguage, textCurrency);
@@ -46,20 +43,35 @@ const Extenso = () => {
       <ContainerSelectStyle>
         <Select
           onChange={event => {
-            setTextCurrency('');
+            const selectedIndex = event.target.selectedIndex;
+            const x = event.target.options[selectedIndex].getAttribute('data-value') || '';
+            setTextCurrency(x);
             setTextLanguage(event.target.value);
           }}
         >
-          <option value="pt">pt</option>
-          <option value="en">en</option>
-          <option value="es">es</option>
-          <option value="de">de</option>
-          <option value="fr">fr</option>
+          <option value="pt" data-value="BRL">
+            pt
+          </option>
+          <option value="en" data-value="USD">
+            en
+          </option>
+          <option value="en" data-value="GBP">
+            en-gb
+          </option>
+          <option value="es" data-value="EUR">
+            es
+          </option>
+          <option value="de" data-value="EUR">
+            de
+          </option>
+          <option value="fr" data-value="EUR">
+            fr
+          </option>
         </Select>
         <Select onChange={event => setTextCurrency(event.target.value)}>
           <option value="BRL">BRL</option>
           <option value="USD">USD</option>
-          <option value="ARS">ARS</option>
+          <option value="GBP">GBP</option>
           <option value="EUR">EUR</option>
         </Select>
       </ContainerSelectStyle>
@@ -68,6 +80,7 @@ const Extenso = () => {
         onChange={event => setNumberToConvert(event.target.value)}
       />
       <PStyle>{convertedNumber}</PStyle>
+      <ToastContainer />
     </>
   );
 };

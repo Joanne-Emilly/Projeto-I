@@ -36,6 +36,33 @@ const GlobalStyle = createGlobalStyle`
   p {
   font-size: 2rem;
   }
+  
+   .Toastify__toast--success {
+    font-size: 4rem;
+  }
+  .Toastify__toast--warning {
+    font-size: 4rem;
+  }
+  .Toastify__toast--error {
+    font-size: 4rem;
+  }
+  .test {
+    span {
+      font-size: 4rem;
+      color: white;
+    }
+    h1, p {
+    text-align: center;
+    }
+    img {
+      display: block;
+      margin: 30px auto !important;
+      margin: auto;
+      border-radius: 100%;
+      width: 180px;
+      height: 180px
+    }
+  }
 `;
 
 export default GlobalStyle;

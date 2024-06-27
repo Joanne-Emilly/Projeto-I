@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App';
-import GlobalStyle from './styles';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Conversor from './pages/Conversor';
 import Extenso from './pages/Extenso';
-import PraticaApi from './pages/terceiroProjeto';
+import RandomPeople from './pages/RandomPeople';
+import GlobalStyle from './styles';
 
 const router = createBrowserRouter([
   {
@@ -18,12 +18,12 @@ const router = createBrowserRouter([
         element: <Conversor />,
       },
       {
-        path: '/segundo-projeto',
+        path: '/extenso',
         element: <Extenso />,
       },
       {
-        path: '/pratica-api',
-        element: <PraticaApi />,
+        path: '/random-people',
+        element: <RandomPeople />,
       },
     ],
   },

@@ -1,6 +1,7 @@
 import 'react-toastify/dist/ReactToastify.css';
 
 import { IconContext } from 'react-icons';
+import { FaPeopleGroup } from 'react-icons/fa6';
 import { LuPencilLine } from 'react-icons/lu';
 import { MdCurrencyExchange } from 'react-icons/md';
 import { Link, Outlet } from 'react-router-dom';
@@ -21,16 +22,16 @@ function App() {
                 </Link>
               </li>
               <li>
-                <Link to="segundo-projeto">
+                <Link to="extenso">
                   <LuPencilLine />
                   Numero por Extenso
                 </Link>
               </li>
               <li>
-                <Link to="pratica-api">terceiroProjeto</Link>
-              </li>
-              <li>
-                <Link to="quartoProjeto">quartoProjeto</Link>
+                <Link to="random-people">
+                  <FaPeopleGroup />
+                  Pessoas
+                </Link>
               </li>
             </ul>
           </nav>

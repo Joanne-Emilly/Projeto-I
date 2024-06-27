@@ -30,13 +30,4 @@ export const Container = styled.div`
       margin: 0px 15px;
     }
   }
-  .Toastify__toast--success {
-    font-size: 4rem;
-  }
-  .Toastify__toast--warning {
-    font-size: 4rem;
-  }
-  .Toastify__toast--error {
-    font-size: 4rem;
-  }
 `;
