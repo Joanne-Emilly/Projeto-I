@@ -17,7 +17,6 @@ const RandomPeople = () => {
       const res = await axios.get(URL);
       setData(res.data.results);
       setCurrentPerson('');
-      console.log(res.data.results);
     } catch (err) {
       toast.error('Erro no servidor.');
     }

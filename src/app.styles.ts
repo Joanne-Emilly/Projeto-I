@@ -4,6 +4,13 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  > img {
+    border-radius: 100%;
+    width: 150px;
+  }
+  h1 {
+    text-align: center;
+  }
   > header {
     margin-top: 30px;
     margin-bottom: 60px;

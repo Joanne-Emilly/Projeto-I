@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import App from './App';
 import Conversor from './pages/Conversor';
 import Extenso from './pages/Extenso';
+import NovoProjeto from './pages/NovoProjeto';
 import RandomPeople from './pages/RandomPeople';
 import GlobalStyle from './styles';
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/random-people',
         element: <RandomPeople />,
+      },
+      {
+        path: '/novo-projeto',
+        element: <NovoProjeto />,
       },
     ],
   },
